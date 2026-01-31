@@ -22,20 +22,14 @@ jobs:
       contents: read
       pull-requests: write
       issues: read
+      id-token: write
     steps:
-      - name: Acknowledge Claude mention
-        uses: actions/github-script@v7
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          script: |
-            console.log('==================================');
-            console.log('👋 Claude mentioned in this PR');
-            console.log('==================================');
-            console.log(`Event: ${context.eventName}`);
-            if (context.payload.comment) {
-              console.log(`Comment: ${context.payload.comment.body.substring(0, 100)}`);
-            } else if (context.payload.issue) {
-              console.log(`Issue: ${context.payload.issue.title}`);
-            }
-            console.log('==================================');
-            console.log('✅ Workflow executed successfully');
-            console.log('==================================');
+          fetch-depth: 0
+
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
