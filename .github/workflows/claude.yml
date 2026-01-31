@@ -30,7 +30,6 @@ jobs:
             console.log('==================================');
             console.log('👋 Claude mentioned in this PR');
             console.log('==================================');
-            const context = github.context;
             console.log(`Event: ${context.eventName}`);
             if (context.payload.comment) {
               console.log(`Comment: ${context.payload.comment.body.substring(0, 100)}`);
