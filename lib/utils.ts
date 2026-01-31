@@ -1,5 +1,11 @@
 /**
  * Utility functions for the application
+ *
+ * This module provides common utility functions for:
+ * - Date formatting and manipulation
+ * - String truncation and text processing
+ * - Email validation
+ * - Function debouncing for performance optimization
  */
 
 /**
