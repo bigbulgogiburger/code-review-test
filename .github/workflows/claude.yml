@@ -20,31 +20,23 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pull-requests: read
+      pull-requests: write
       issues: read
-      id-token: write
-      actions: read # Required for Claude to read CI results on PRs
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Acknowledge Claude mention
+        uses: actions/github-script@v7
         with:
-          fetch-depth: 1
-
-      - name: Run Claude Code
-        id: claude
-        uses: anthropics/claude-code-action@v1
-        with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-
-          # This is an optional setting that allows Claude to read CI results on PRs
-          additional_permissions: |
-            actions: read
-
-          # Optional: Give a custom prompt to Claude. If this is not specified, Claude will perform the instructions specified in the comment that tagged it.
-          # prompt: 'Update the pull request description to include a summary of changes.'
-
-          # Optional: Add claude_args to customize behavior and configuration
-          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
-          # or https://code.claude.com/docs/en/cli-reference for available options
-          # claude_args: '--allowed-tools Bash(gh pr:*)'
-
+          script: |
+            console.log('==================================');
+            console.log('👋 Claude mentioned in this PR');
+            console.log('==================================');
+            const context = github.context;
+            console.log(`Event: ${context.eventName}`);
+            if (context.payload.comment) {
+              console.log(`Comment: ${context.payload.comment.body.substring(0, 100)}`);
+            } else if (context.payload.issue) {
+              console.log(`Issue: ${context.payload.issue.title}`);
+            }
+            console.log('==================================');
+            console.log('✅ Workflow executed successfully');
+            console.log('==================================');
