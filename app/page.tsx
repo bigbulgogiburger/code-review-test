@@ -4,6 +4,7 @@ import TechStack from "@/components/TechStack";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Navigation from "@/components/Navigation";
+import QABoard from "@/components/QABoard";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <Profile />
       <TechStack />
       <Projects />
+      <QABoard />
       <Contact />
     </main>
   );
